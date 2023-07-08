@@ -1,7 +1,5 @@
 // la page estará enchufada al estado y puede ser un custom element o un elemento con createElement y lo manipulamos para que muestre el listado de pendientes
-import { create } from "domain";
 import {state} from "../../state";
-import { toUnicode } from "punycode";
 
 // lo creamos en una funcion para que sea invocable
 export function initHomePage(container){
@@ -30,12 +28,10 @@ export function initHomePage(container){
         .div-container {
             display: flex;
             flex-direction: column;
-
         }
 
         @media (min-width: 960px) {
             .div-container {
-                display: flex;
                 justify-content: center;
                 padding: 48px 160px 0px 160px;
                 gap: 30px;
@@ -64,7 +60,6 @@ export function initHomePage(container){
             margin-bottom: 46px;
             width: 100%;
         }
-
 
         @media (min-width: 960px) {
             .container {
@@ -159,9 +154,8 @@ export function initHomePage(container){
     const btnEl = div.querySelector(".add-button");
     const inputEl = div.querySelector(".input")
     
-
     function createTasks(tasks){
-        // vaciamos la lista cada vez que invocaoms a createTasks para que se imprima con la última version del state
+        // vaciamos la lista cada vez que invocamos a createTasks para que se imprima con la última version del state
         (listaEl as any).innerHTML = "";
         for (const task of tasks) {
             const todoItemEl = document.createElement("todo-item");
@@ -177,9 +171,7 @@ export function initHomePage(container){
         }
     };
 
-
-    
-    // cada vez que se modifique el state y se invoque a setState, se van a ejecutar los listeners que son estas funciones que pasamos como callback a subscribe. Esto se ejecuta cada vez que cambie el state
+    // cada vez que se modifique el state y se invoque a setState, se van a ejecutar los listeners que son estas funciones que pasamos como callback a subscribe. Esto se ejecuta cada vez que cambie el state (se agregue un item, un item pase a completed, etc)
     state.subscribe(()=>{
         createTasks(state.getEnabledTasks());
     });
@@ -191,9 +183,10 @@ export function initHomePage(container){
         if((inputEl as any).value == "") {
             alert("Por favor, inserta un task");
         } else {
-            state.addTask(Math.random(), (inputEl as any).value)
+            state.addTask(Math.random(), (inputEl as any).value);
         }
     });
+    
     div.appendChild(style);
     container.appendChild(div);
 };

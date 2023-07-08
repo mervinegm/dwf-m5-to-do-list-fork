@@ -6,7 +6,7 @@ import { state } from "./state";
 
 (function(){
     // Si habilitamos y lo corremos de manera local podemos hacer que persista datos en localStorage y luego el state los recupere
-    // state.init();
+    state.init();
     const root = document.querySelector(".root");
     initHomePage(root);
 })();
